@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/navigation_item_appscanning"
+            android:title="@string/navigation_appscanning" />
+        <item
+            android:id="@+id/navigation_item_record"
+            android:title="@string/navigation_record" />
+        <item
+            android:id="@+id/navigation_item_whitelisting"
+            android:title="@string/navigation_whitelisting" />
+
+    </group>
+
+</menu>
