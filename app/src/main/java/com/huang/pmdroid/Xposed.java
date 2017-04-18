@@ -33,10 +33,11 @@ public class Xposed implements IXposedHookLoadPackage{
                         Intent intent = (Intent) param.args[0];
                         Bundle intentExtras = intent.getExtras();
                         Log.e("777TF",""+ intent.getAction().equals("com.huang.pmdroid.receive"));
-                        if(DataUtil.hasExtras(intentExtras) == true && intent.getAction().equals("com.huang.pmdroid.receive") != true)
+                        String from = param.thisObject.getClass().getName();
+                        if(DataUtil.hasExtras(intentExtras) == true && intent.getAction().equals("com.huang.pmdroid.receive") != true
+                                && !from.equals("com.android.launcher2.Launcher"))
                         {
                             Log.e("777", "successEnter");
-                            String from = param.thisObject.getClass().getName();
                             Context context = (Context)param.thisObject;
                             Intent set_data = new Intent();                  //将数据传输给Service组件中
                             set_data.setAction("com.huang.pmdroid.receive");

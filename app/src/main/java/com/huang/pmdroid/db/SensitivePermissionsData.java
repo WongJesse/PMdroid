@@ -10,8 +10,8 @@ import com.huang.pmdroid.utils.Constants;
  * Created by huang on 2017/4/12.
  */
 public class SensitivePermissionsData {
-    private Map<String,List> map = new HashMap<>();
-    public void setInitData(){
+    private static Map<String,List> map = new HashMap<>();
+    public static void setInitData(){
         List<String> list1 = new ArrayList<>();
         list1.add(Constants.INTERNET);
         list1.add(Constants.SEND_SMS);
@@ -101,7 +101,7 @@ public class SensitivePermissionsData {
         map.put(Constants.INTERNET, list14);
     }
 
-    public Map<String, List> getData(){
+    public static Map<String, List> getData(){
         return map;
     }
 
