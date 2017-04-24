@@ -4,6 +4,7 @@
     <string name="navigation_appscanning">应用扫描</string>
     <string name="navigation_whitelisting">白名单管理</string>
     <string name="navigation_record">拦截记录</string>
+    <string name="navigation_main">首页</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -15,5 +16,18 @@
     <string name="start_scan">点击扫描</string>
 
     <string name="start_service">启动服务</string>
+
+    <string name="hint_not_data">暂无拦截数据</string>
+
+    <string name="action_clear">清空</string>
+
+    <string name="dialog_clear_record_message">确定要清空拦截记录么？</string>
+    <string name="dialog_delete_record_message">确定要删除所选记录吗？</string>
+    <string name="dialog_delete_record_title">删除记录</string>
+
+    <string name="dialog_detail_info">详细信息</string>
+
+    <string name="action_cancel">取消</string>
+    <string name="action_delete">删除</string>
 
 </resources>

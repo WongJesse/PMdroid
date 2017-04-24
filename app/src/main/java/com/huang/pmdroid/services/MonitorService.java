@@ -18,6 +18,9 @@ import android.util.Log;
 import com.huang.pmdroid.MainActivity;
 import com.huang.pmdroid.R;
 import com.huang.pmdroid.RecordActivity;
+import com.huang.pmdroid.db.DbHelper;
+import com.huang.pmdroid.models.Record;
+import com.huang.pmdroid.utils.Constants;
 import com.huang.pmdroid.utils.SplitHelper;
 import com.huang.pmdroid.db.SensitivePermissionsData;
 import java.util.List;
@@ -70,8 +73,10 @@ public class MonitorService extends Service {
         super.onDestroy();
     }
     //传入的from与to不一定是包名，需要分割、比较确定包名
-    private boolean decisionMaker(String from, String to){
+    private boolean decisionMaker(Record record){
         int index;
+        String from = record.getOrigin();
+        String to = record.getDest();
         List<String> listFrom = SplitHelper.stringSplit(from);
         List<String> listTo = SplitHelper.stringSplit(to);
         if(!listFrom.isEmpty() && !listTo.isEmpty()){
@@ -126,6 +131,8 @@ public class MonitorService extends Service {
                                 if(permissionTo[j].equals(cmp)){
                                     Log.e("MonitorServiceLast", permissionFrom[i]);
                                     Log.e("MonitorServiceLast", permissionTo[j]);
+                                    record.setOrigin(from);   //更新包名
+                                    record.setDest(to);
                                     return true;
                                 }
                             }
@@ -170,14 +177,21 @@ public class MonitorService extends Service {
         public void onReceive(Context context, Intent intent){
             if(intent.getAction().equals("com.huang.pmdroid.receive")){
                 boolean decision;
-                String from = intent.getExtras().getString("from");
-                String to = intent.getExtras().getString("to");
-        //        Log.e("777", from);
-         //       Log.e("777",to);
-                decision = decisionMaker(from, to);
+                Record record = intent.getParcelableExtra("intentData");
+                String to = record.getDest();
+                String from = record.getOrigin();
+                Log.i(Constants.TAG, from);
+                Log.i(Constants.TAG,to);
+                Log.i(Constants.TAG, record.getIntentExtras());
+                decision = decisionMaker(record);
                 Log.e("MonitorServiceResult", ""+decision);
                 if(decision){
-                     sendNotification(from, to);
+                    Log.i(Constants.TAG, record.getOrigin());
+                    Log.i(Constants.TAG, record.getDest());
+                    from = record.getOrigin();  //更新包名
+                    to = record.getDest();
+                    DbHelper.getInstance(context).insertRecord(record);
+                    sendNotification(from, to);
                 }
 
             }
@@ -186,10 +200,16 @@ public class MonitorService extends Service {
 
     private void sendNotification(String from, String to){
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent nf = new Intent(this, RecordActivity.class);
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        //将MainAtivity的launchMode设置成SingleTask, 或者在下面flag中加上Intent.FLAG_CLEAR_TOP,
+        //如果Task栈中有MainActivity的实例，就会把它移到栈顶，把在它之上的Activity都清理出栈，
+        //如果Task栈不存在MainActivity实例，则在栈顶创建
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent recordIntent = new Intent(this, RecordActivity.class);
+        Intent[] nf = {mainIntent, recordIntent};
         Notification.Builder builder = new Notification.Builder(this.getApplicationContext());
         builder.setContentIntent(PendingIntent.
-                getActivity(this, 0, nf, 0))
+                getActivities(this, 0, nf, 0)) //getActivities可以传入Intent数组， getActivity传入Intent
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
                         R.mipmap.ic_launcher))
                 .setTicker("PMdroid")

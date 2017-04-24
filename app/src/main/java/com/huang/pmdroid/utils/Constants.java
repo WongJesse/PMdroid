@@ -5,6 +5,9 @@ package com.huang.pmdroid.utils;
  */
 public interface Constants {
 
+    String TAG = "PMdroid";
+    String DATABASE_NAME = "PMdroid.db";
+
     //定义敏感权限集
     String INTERNET = "android.permission.INTERNET";
     String SEND_SMS = "android.permission.SEND_SMS";

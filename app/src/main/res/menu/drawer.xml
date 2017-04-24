@@ -4,6 +4,9 @@
     tools:context=".MainActivity">
     <group android:checkableBehavior="none">
         <item
+            android:id="@+id/navigation_item_main"
+            android:title="@string/navigation_main"/>
+        <item
             android:id="@+id/navigation_item_appscanning"
             android:title="@string/navigation_appscanning" />
         <item

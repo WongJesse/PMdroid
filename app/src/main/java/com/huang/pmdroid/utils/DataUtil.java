@@ -27,10 +27,10 @@ import org.apache.commons.io.FileUtils;
 
 public class DataUtil {
 
-    private static final String FILE_PATH = "/data/data/com.sorcererxw.intentinterceptor/files/";
+    private static final String FILE_PATH = "/data/data/com.huang.pmdroid/files/";
 
     private static final String DATA_PATH =
-            "/data/data/com.sorcererxw.intentinterceptor/files/intent_data";
+            "/data/data/com.huang.pmdroid/files/intent_data";
 
     public static void createFile(Context context) {
         if (Build.VERSION.SDK_INT >= 24) {
@@ -215,6 +215,28 @@ public class DataUtil {
         return builder.toString();
     }
 
+    public static String intentExtrasParser(Bundle intentExtras){
+        if(intentExtras != null){
+            StringBuilder builder = new StringBuilder();
+            builder.append("[");
+            boolean added = false;
+            for (String key : intentExtras.keySet()) {
+                Object value = intentExtras.get(key);
+                if (added) {
+                    builder.append(",");
+                }
+                builder.append(String.format("{\"key\": \"%s\",", key))
+                        .append(String.format("\"value\": \"%s\",", value))
+                        .append(String.format("\"class\": \"%s\"}", value.getClass().getName()));
+                added = true;
+            }
+            builder.append("]");
+            return builder.toString();
+        }
+        else
+            return "null";
+    }
+
     public static boolean hasExtras(Bundle extras) {
         try {
             return (extras != null && !extras.isEmpty());
@@ -222,5 +244,10 @@ public class DataUtil {
             Log.e("IntentLogger", "Extra contains unknown class instance: ", e);
             return true;
         }
+    }
+
+    public static String getDateFromTimestamp(long timestamp){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        return simpleDateFormat.format(timestamp);
     }
 }
