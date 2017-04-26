@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+       <!-- <item name="android:textColor">#FFFFFF</item> -->
+    </style>
+
+    <style name="ButtonRemove" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorButtonNormal">@color/button_material_dark</item>
+        <item name="android:textColor">@color/primary_text_disabled</item>
+    </style>
+
+
+
 </resources>

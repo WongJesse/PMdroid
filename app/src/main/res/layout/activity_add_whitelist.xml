@@ -4,34 +4,26 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/include_toolbar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tv_hint_whiteList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="italic"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/whiteList_recyclerView"
+            android:id="@+id/add_whiteList_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:layout_above="@+id/btn_add_whiteList"/>
+            android:layout_above="@+id/btn_choice_whiteList"/>
 
         <Button
-            android:id="@+id/btn_add_whiteList"
+            android:id="@+id/btn_choice_whiteList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="添加"
+            android:text="确定"
             android:textSize="18dp"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:enabled="true"/>
+            style="@style/MyButton" />
 
 
     </RelativeLayout>

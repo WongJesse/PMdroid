@@ -57,7 +57,6 @@ public class RecordActivity extends AppCompatActivity {
     private Context context;
     private boolean selectingState=false;
     private int selectNumber=0;
-    private int titleMode=0;
     private int menuState=0;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -253,10 +252,11 @@ public class RecordActivity extends AppCompatActivity {
         Observable.create(new Observable.OnSubscribe<List<Record>>(){
             @Override
             public void call(Subscriber<? super List<Record>> subscriber){
-                Cursor cursor = dbHelper.getReadableDatabase().query("records", null, null, null, null, null, null);
+                mResultlist.clear(); //初始化list,防止数据重复
+                mResultlist = DbHelper.getInstance(context).getAllRecords();
+  /*              Cursor cursor = dbHelper.getReadableDatabase().query("records", null, null, null, null, null, null);
                 if(cursor != null && cursor.getCount() >= 0){
                     cursor.moveToLast();
-                    mResultlist.clear(); //初始化list,防止数据重复
                     for(int i = cursor.getCount() - 1; i >= 0; i--){
                         cursor.moveToPosition(i);
                         Record record = new Record();
@@ -272,7 +272,7 @@ public class RecordActivity extends AppCompatActivity {
                         mResultlist.add(record);
                     }
                     cursor.close();
-                }
+                }  */
                 subscriber.onNext(mResultlist);
                 subscriber.onCompleted();
             }
