@@ -208,4 +208,18 @@ public class DbHelper extends SQLiteOpenHelper{
         }
         return packNames;
     }
+
+    public void deleteWhiteList(String packName){
+        SQLiteDatabase db = getDatabase(true);
+        db.delete(TABLE_WHITELIST, KEY_APP_PACKNAME+"=?", new String[]{packName+""});
+    }
+
+    public boolean checkPackNameExist(String packName){
+        String sql = KEY_APP_PACKNAME + " = " + "'" + packName + "'";
+        Cursor cursor = getDatabase(true).query(TABLE_WHITELIST, new String[]{KEY_APP_PACKNAME}, sql, null, null, null, null);
+        if(cursor != null && cursor.getCount() == 1)
+            return true;
+        else
+            return false;
+    }
 }

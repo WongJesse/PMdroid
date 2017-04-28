@@ -389,11 +389,11 @@ public class RecordActivity extends AppCompatActivity {
         menu.clear();
         switch(menuState){
             case 0:
-                menu.add(0, 0, 1, "@string/action_clear").setIcon(R.drawable.ic_white_clear).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                menu.add(0, 0, 1, getResources().getString(R.string.action_clear)).setIcon(R.drawable.ic_white_clear).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
                 break;
             case 1:
-                menu.add(0, 1, 2, "@string/action_delete").setIcon(R.drawable.ic_delete_white).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-                menu.add(0, 2, 3, "@string/action_cancel").setIcon(R.drawable.ic_cancel_white).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                menu.add(0, 1, 2, getResources().getString(R.string.action_delete)).setIcon(R.drawable.ic_delete_white).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                menu.add(0, 2, 3, getResources().getString(R.string.action_cancel)).setIcon(R.drawable.ic_cancel_white).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             break;
         }
         return true;

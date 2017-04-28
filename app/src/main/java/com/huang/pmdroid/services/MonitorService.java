@@ -115,6 +115,11 @@ public class MonitorService extends Service {
                 return false;
             }
 
+            //检查from 与 to 是否在白名单中, 如果在,返回false
+            if(checkFromWhiteList(from, to)){
+                return false;
+            }
+
             String permissionFrom[] = getPermission(from);
             String permissionTo[] = getPermission(to);
             if(permissionFrom == null || permissionTo == null){
@@ -144,6 +149,13 @@ public class MonitorService extends Service {
             }
 
         }
+        else
+            return false;
+    }
+
+    private boolean checkFromWhiteList(String from, String to){
+        if(DbHelper.getInstance(context).checkPackNameExist(from) || DbHelper.getInstance(context).checkPackNameExist(to))
+            return true;
         else
             return false;
     }

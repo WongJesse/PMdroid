@@ -48,6 +48,13 @@ public class WhiteListAdapter extends RecyclerView.Adapter<WhiteListAdapter.Whit
         notifyDataSetChanged();
     }
 
+    public void removeData(int position){
+        list.remove(position);
+        notifyItemRemoved(position);
+        //防止position混乱
+        notifyItemRangeChanged(position, list.size());
+    }
+
     @Override
     public WhiteListViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         return new WhiteListViewHolder(LayoutInflater.from(context).inflate(R.layout.item_whitelist, parent, false));

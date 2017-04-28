@@ -26,6 +26,10 @@
     <string name="dialog_delete_record_message">确定要删除所选记录吗？</string>
     <string name="dialog_delete_record_title">删除记录</string>
 
+    <string name="dialog_delete_whiteList_title">移除白名单</string>
+    <string name="dialog_delete_whiteList_message">确定要将“</string>
+    <string name="dialog_delete_whiteList_message1">”移出白名单吗？</string>
+
     <string name="dialog_detail_info">详细信息</string>
 
     <string name="action_cancel">取消</string>

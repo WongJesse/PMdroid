@@ -23,7 +23,7 @@
 
 
     <Button
-        style="@style/ButtonRemove"
+        android:theme="@style/ButtonRemove"
         android:id="@+id/btn_remove_whiteList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

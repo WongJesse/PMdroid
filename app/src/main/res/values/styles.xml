@@ -14,8 +14,8 @@
     </style>
 
     <style name="ButtonRemove" parent="Widget.AppCompat.Button.Borderless">
-        <item name="colorButtonNormal">@color/button_material_dark</item>
-        <item name="android:textColor">@color/primary_text_disabled</item>
+        <item name="colorButtonNormal">@color/button_material_light</item>
+        <item name="android:textColor">@color/text_remove</item>
     </style>
 
 
