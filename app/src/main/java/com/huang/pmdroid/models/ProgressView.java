@@ -1,7 +1,6 @@
 package com.huang.pmdroid.models;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.ProgressBar;
 
 /**
  * Created by huang on 2017/4/26.
+ *
  */
 public class ProgressView {
 

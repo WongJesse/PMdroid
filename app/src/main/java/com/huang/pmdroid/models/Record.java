@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 /**
  * Created by huang on 2017/4/19.
+ *
  */
 //record实体类，实现序列化接口
 public class Record implements Parcelable{

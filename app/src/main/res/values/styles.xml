@@ -14,8 +14,13 @@
     </style>
 
     <style name="ButtonRemove" parent="Widget.AppCompat.Button.Borderless">
-        <item name="colorButtonNormal">@color/button_material_light</item>
+        <item name="colorButtonNormal">@color/my_button_material_light</item>
         <item name="android:textColor">@color/text_remove</item>
+    </style>
+
+    <style name="ButtonScan" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/scan_color</item>
     </style>
 
 

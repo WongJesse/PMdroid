@@ -8,6 +8,7 @@ import com.huang.pmdroid.utils.Constants;
 
 /**
  * Created by huang on 2017/4/12.
+ *
  */
 public class SensitivePermissionsData {
     private static Map<String,List> map = new HashMap<>();

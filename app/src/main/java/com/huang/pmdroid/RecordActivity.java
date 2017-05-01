@@ -3,8 +3,6 @@ package com.huang.pmdroid;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,26 +31,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-import rx.observers.Observers;
-
 /**
  * Created by huang on 2017/4/10.
+ *
  */
 public class RecordActivity extends AppCompatActivity {
     private List<Record> mResultlist = new ArrayList<>();
     private Toolbar toolbar;
-    private RecyclerView recyclerView;
     private RecordAdapter recordAdapter;
     private TextView tvHintRecord;
-    private TextView tvRecordDialog;
-    private DbHelper dbHelper;
     private Context context;
     private boolean selectingState=false;
     private int selectNumber=0;
@@ -66,7 +56,6 @@ public class RecordActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         initToolbar();
         initRecyclerView();
-        dbHelper = new DbHelper(this);
     }
 
     @Override
@@ -121,13 +110,15 @@ public class RecordActivity extends AppCompatActivity {
                 return true;
             }
         });  */
-        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setHomeButtonEnabled(true);  //设置返回键可用
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void initRecyclerView(){
         tvHintRecord = (TextView) findViewById(R.id.tv_hint_record);
-        recyclerView = (RecyclerView)findViewById(R.id.record_recyclerView);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.record_recyclerView);
         recordAdapter = new RecordAdapter(this);
         recyclerView.setAdapter(recordAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -163,7 +154,7 @@ public class RecordActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                if(selectingState == false){
+                if(!selectingState){
                     selectingState = true;
                     mResultlist.get(position).setIsSelected(true);
                     selectNumber++;
@@ -197,7 +188,7 @@ public class RecordActivity extends AppCompatActivity {
         Record record = mResultlist.get(position);
         Dialog dialog = new Dialog(context);
         View v = View.inflate(context, R.layout.dialog_record_detail, null);
-        tvRecordDialog = (TextView)v.findViewById(R.id.tv_dialog_record);
+        TextView tvRecordDialog = (TextView)v.findViewById(R.id.tv_dialog_record);
 
         HtmlBuilder htmlBuilder = new HtmlBuilder();
         htmlBuilder.newLine()
@@ -296,16 +287,15 @@ public class RecordActivity extends AppCompatActivity {
         this.menuState = menuState;
         invalidateOptionsMenu();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_record, menu);
         return true;
-    }
+    }  */
 
    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
        switch(item.getItemId()){
            case android.R.id.home:
                finish();

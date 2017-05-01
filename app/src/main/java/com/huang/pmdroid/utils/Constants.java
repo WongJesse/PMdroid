@@ -2,11 +2,13 @@ package com.huang.pmdroid.utils;
 
 /**
  * Created by huang on 2017/4/12.
+ *
  */
 public interface Constants {
 
     String TAG = "PMdroid";
     String DATABASE_NAME = "PMdroid.db";
+    String SERVICE_NAME = "com.huang.pmdroid.services.MonitorService";
 
     //定义敏感权限集
     String INTERNET = "android.permission.INTERNET";

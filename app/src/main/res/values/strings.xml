@@ -26,6 +26,8 @@
     <string name="dialog_delete_record_message">确定要删除所选记录吗？</string>
     <string name="dialog_delete_record_title">删除记录</string>
 
+    <string name="dialog_clear_whiteList_message">确定要清空白名单么？</string>
+
     <string name="dialog_delete_whiteList_title">移除白名单</string>
     <string name="dialog_delete_whiteList_message">确定要将“</string>
     <string name="dialog_delete_whiteList_message1">”移出白名单吗？</string>
@@ -36,4 +38,33 @@
     <string name="action_delete">删除</string>
 
     <string name="remove_whiteList">移除</string>
+    <string name="btn_enter_whiteList">查看白名单</string>
+
+    <string name="show_add_whiteList">已加入白名单列表</string>
+
+    <string name="zero">0</string>
+
+    <string name="item">项</string>
+
+    <string name="add_whiteList">添加</string>
+
+    <string name="scanning">正在扫描:%s</string>
+    <string name="show_progress">(%1$s/%2$s)</string>
+    <string name="add_to_whiteList">加入白名单:%s</string>
+
+    <string name="scan_instruction">将无提升攻击危险的应用加入白名单</string>
+
+    <string name="open_service">开启监控服务</string>
+    <string name="opening">启动中...</string>
+    <string name="is_open">PMdroid监控服务已开启</string>
+    <string name="closing">关闭中...</string>
+    <string name="close">关闭</string>
+
+    <string name="mention">提示</string>
+    <string name="mention_xposed">Xposed模块未开启，请开启Xposed模块并重启！</string>
+    <string name="add_count">%d</string>
+    <string name="certain_checkBox_count">确定(%d)</string>
+    <string name="press_again_exit_app">再按一次退出程序</string>
+
+
 </resources>

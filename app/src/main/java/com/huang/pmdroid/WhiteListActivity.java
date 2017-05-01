@@ -10,16 +10,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.huang.pmdroid.adapters.AppInfoAdapter;
 import com.huang.pmdroid.adapters.WhiteListAdapter;
 import com.huang.pmdroid.db.DbHelper;
 import com.huang.pmdroid.models.AppInfo;
-import com.huang.pmdroid.models.Record;
 import com.huang.pmdroid.utils.Constants;
 
 import java.util.ArrayList;
@@ -33,11 +32,10 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by huang on 2017/4/10.
+ *
  */
 public class WhiteListActivity extends AppCompatActivity {
     private TextView tvHintWhiteList;
-    private Button btnAdd;
-    private RecyclerView recyclerView;
     private WhiteListAdapter whiteListAdapter;
     private Context context;
     private List<AppInfo> whiteListInfos = new ArrayList<>();
@@ -49,7 +47,7 @@ public class WhiteListActivity extends AppCompatActivity {
         tvHintWhiteList = (TextView) findViewById(R.id.tv_hint_whiteList);
         initToolbar();
         initRecyclerView();
-        btnAdd = (Button) findViewById(R.id.btn_add_whiteList);
+        Button btnAdd = (Button) findViewById(R.id.btn_add_whiteList);
         btnAdd.setOnClickListener(addWhiteListListener);
     }
 
@@ -66,12 +64,14 @@ public class WhiteListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_whitelist);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setHomeButtonEnabled(true);  //设置返回键可用
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void initRecyclerView(){
-        recyclerView = (RecyclerView) findViewById(R.id.whiteList_recyclerView);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.whiteList_recyclerView);
         whiteListAdapter = new WhiteListAdapter(context);
         recyclerView.setAdapter(whiteListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -97,9 +97,9 @@ public class WhiteListActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         try {
                                             DbHelper.getInstance(context).deleteWhiteList(whiteListInfos.get(position).getPackName());
+                                          //  Log.i(Constants.TAG, whiteListInfos.get(position).getPackName());
+                                            Log.i(Constants.TAG, position + "");
                                             whiteListAdapter.removeData(position);
-                                            Log.i(Constants.TAG, whiteListInfos.get(position).getPackName());
-                                            Log.i(Constants.TAG, position+"");
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -146,13 +146,44 @@ public class WhiteListActivity extends AppCompatActivity {
 
     }
 
-
-            public boolean onOptionsItemSelected(MenuItem item) {
-                // TODO Auto-generated method stub
-                if (item.getItemId() == android.R.id.home) {
-                    finish();
-                    return true;
-                }
-                return super.onOptionsItemSelected(item);
-            }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        if(item.getItemId() == 0){
+            new AlertDialog.Builder(context)
+                    .setMessage(R.string.dialog_clear_whiteList_message)
+                    .setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                    .setPositiveButton(android.R.string.ok,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        DbHelper.getInstance(context).clearAllFromWhiteList();
+                                        whiteListAdapter.clearData();
+                                        tvHintWhiteList.setText(R.string.hint_not_data);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.add(0, 0, 1, getResources().getString(R.string.action_clear)).setIcon(R.drawable.ic_white_clear).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        return true;
+    }
+
+}

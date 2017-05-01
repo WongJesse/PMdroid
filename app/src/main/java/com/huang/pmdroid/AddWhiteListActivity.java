@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,12 +31,12 @@ import java.util.Map;
 
 /**
  * Created by huang on 2017/4/24.
+ *
  */
 public class AddWhiteListActivity extends AppCompatActivity {
     private Context context;
     List<AppInfo> appInfos = new ArrayList<>();
     AsyncTask<Void, Integer, List<AppInfo>> task;
-    private RecyclerView recyclerView;
     private AppInfoAdapter appInfoAdapter;
     private Map<Integer, Boolean> map = new HashMap<>();
     private Button btnChoice;
@@ -53,8 +54,10 @@ public class AddWhiteListActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         btnChoice = (Button) findViewById(R.id.btn_choice_whiteList);
         btnChoice.setEnabled(false);
-        btnChoice.setTextColor(getResources().getColor(R.color.primary_text_disabled));
+        btnChoice.setTextColor(ContextCompat.getColor(context, R.color.primary_text_disabled));
+        //btnChoice.setTextColor(getResources().getColor(R.color.primary_text_disabled));
         btnChoice.setOnClickListener(btnChoiceListener);
+
     }
 
     private void initToolbar()
@@ -62,12 +65,14 @@ public class AddWhiteListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_add_whitelist);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setHomeButtonEnabled(true);  //设置返回键可用
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void initRecyclerView(){
-        recyclerView = (RecyclerView) findViewById(R.id.add_whiteList_recyclerView);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.add_whiteList_recyclerView);
         appInfoAdapter = new AppInfoAdapter(context);
         recyclerView.setAdapter(appInfoAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -78,17 +83,17 @@ public class AddWhiteListActivity extends AppCompatActivity {
                 if (isChecked) {
                     cntCheckBox++;
                     btnChoice.setEnabled(true);
-                    btnChoice.setTextColor(getResources().getColor(R.color.white));
-                    btnChoice.setText("确定(" + cntCheckBox + ")");
+                    btnChoice.setTextColor(ContextCompat.getColor(context, R.color.white));
+                    btnChoice.setText(getResources().getString(R.string.certain_checkBox_count, cntCheckBox));
                 } else {
                     cntCheckBox--;
                     btnChoice.setEnabled(true);
-                    btnChoice.setTextColor(getResources().getColor(R.color.white));
-                    btnChoice.setText("确定(" + cntCheckBox + ")");
+                    btnChoice.setTextColor(ContextCompat.getColor(context, R.color.white));
+                    btnChoice.setText(getResources().getString(R.string.certain_checkBox_count, cntCheckBox));
                 }
                 if (cntCheckBox == 0) {
                     btnChoice.setEnabled(false);
-                    btnChoice.setTextColor(getResources().getColor(R.color.primary_text_disabled));
+                    btnChoice.setTextColor(ContextCompat.getColor(context, R.color.primary_text_disabled));
                     btnChoice.setText("确定");
                 }
                 Log.i(Constants.TAG, position +"");

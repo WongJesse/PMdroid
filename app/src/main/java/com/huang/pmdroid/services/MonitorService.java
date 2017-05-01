@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * Created by huang on 2017/4/14.
+ *
  */
 public class MonitorService extends Service {
     private Context context;
@@ -70,6 +71,7 @@ public class MonitorService extends Service {
     public void onDestroy() {
         Log.d("MonitorService", "onDestroy()");
         stopForeground(true);// 停止前台服务--参数：表示是否移除之前的通知
+        unregisterReceiver(receiver);
         super.onDestroy();
     }
     //传入的from与to不一定是包名，需要分割、比较确定包名
@@ -128,14 +130,15 @@ public class MonitorService extends Service {
             }
             else{
                 Map<String,List> data = SensitivePermissionsData.getData();
-                for(int i = 0; i < permissionFrom.length; i++){
-                    if(data.containsKey(permissionFrom[i])){
-                        List<String> list = data.get(permissionFrom[i]);
-                        for(int j = 0; j < permissionTo.length; j++){
+                //for(int i = 0; i < permissionFrom.length; i++){
+                for(String perFrom : permissionFrom){
+                    if(data.containsKey(perFrom)){
+                        List<String> list = data.get(perFrom);
+                        for(String perTo : permissionTo){
                             for(String cmp : list){
-                                if(permissionTo[j].equals(cmp)){
-                                    Log.e("MonitorServiceLast", permissionFrom[i]);
-                                    Log.e("MonitorServiceLast", permissionTo[j]);
+                                if(perTo.equals(cmp)){
+                                    Log.e("MonitorServiceLast", perFrom);
+                                    Log.e("MonitorServiceLast", perTo);
                                     record.setOrigin(from);   //更新包名
                                     record.setDest(to);
                                     return true;
@@ -154,10 +157,11 @@ public class MonitorService extends Service {
     }
 
     private boolean checkFromWhiteList(String from, String to){
-        if(DbHelper.getInstance(context).checkPackNameExist(from) || DbHelper.getInstance(context).checkPackNameExist(to))
+        return (DbHelper.getInstance(context).checkPackNameExist(from) || DbHelper.getInstance(context).checkPackNameExist(to));
+    /*    if(DbHelper.getInstance(context).checkPackNameExist(from) || DbHelper.getInstance(context).checkPackNameExist(to))
             return true;
         else
-            return false;
+            return false;  */
     }
 
     private String[] getPermission(String string){
@@ -165,7 +169,7 @@ public class MonitorService extends Service {
    //         int length;
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packInfo = packageManager.getPackageInfo(string, PackageManager.GET_PERMISSIONS);
-            String permissions[] = packInfo.requestedPermissions;
+           // String permissions[] = packInfo.requestedPermissions;
 /*            if(permissions != null){
                 length = permissions.length;
             }
@@ -175,12 +179,11 @@ public class MonitorService extends Service {
             for(int i = 0 ;i < length ;i ++){
                Log.e("MonitorService",permissions[i]);
             }   */
-            return permissions;
+            return packInfo.requestedPermissions;
         }catch (PackageManager.NameNotFoundException e){
             e.printStackTrace();
             Log.e("MonitorService","NameNotFound");
-            String exception[] = new String[1];
-            return exception;
+            return new String[1];
         }
     }
 

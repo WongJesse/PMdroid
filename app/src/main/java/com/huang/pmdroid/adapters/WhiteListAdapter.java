@@ -1,7 +1,6 @@
 package com.huang.pmdroid.adapters;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by huang on 2017/4/26.
+ *
  */
 public class WhiteListAdapter extends RecyclerView.Adapter<WhiteListAdapter.WhiteListViewHolder> {
     private Context context;
@@ -46,6 +46,12 @@ public class WhiteListAdapter extends RecyclerView.Adapter<WhiteListAdapter.Whit
     public void setData(List<AppInfo> list){
         this.list = list;
         notifyDataSetChanged();
+    }
+
+    public void clearData(){
+        int count = list.size();
+        list.clear();
+        notifyItemRangeRemoved(0, count);
     }
 
     public void removeData(int position){

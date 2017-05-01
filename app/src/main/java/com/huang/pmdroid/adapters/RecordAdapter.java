@@ -2,8 +2,8 @@ package com.huang.pmdroid.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.huang.pmdroid.R;
 import com.huang.pmdroid.models.Record;
-import com.huang.pmdroid.utils.Constants;
 import com.huang.pmdroid.utils.DataUtil;
 import com.huang.pmdroid.utils.HtmlBuilder;
 
@@ -24,6 +23,7 @@ import java.util.List;
 
 /**
  * Created by huang on 2017/4/22.
+ *
  */
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder>{
     private Context context;
@@ -108,10 +108,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         }
         public void selectedRecord(Record item){
             if(item.getIsSelected()){
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.item_selected));
+               // itemView.setBackground(context.getResources().getDrawable(R.drawable.item_selected));
+                ContextCompat.getDrawable(context,R.drawable.item_selected);
             }else{
-                itemView.setBackground(context.getResources().getDrawable(R.drawable.item_common));
+                ContextCompat.getDrawable(context,R.drawable.item_common);
+                //itemView.setBackground(context.getResources().getDrawable(R.drawable.item_common));
             }
+
         }
     }
 

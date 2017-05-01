@@ -1,43 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/include_toolbar" />
 
-    <Button
-        android:id="@+id/bt_scan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorAccent"
-        android:text="@string/start_scan" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tv_show_scan"
-            android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        tools:targetApi="LOLLIPOP">
+        <!-- 初始界面-->
+        <ImageView
+            android:id="@+id/iv_default_bg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:background="@drawable/ic_bg"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:layout_below="@+id/iv_default_bg">
+
+            <Button
+                android:id="@+id/bt_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:text="@string/start_scan"
+                android:elevation="0dp"
+                style="@style/ButtonScan"/>
+
+        </RelativeLayout>
+
+        <!--扫描与扫描结束界面-->
+
+        <ImageView
+            android:id="@+id/iv_scan_anim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/scan_anim"
+            android:contentDescription="@null"
+            android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/tv_show_progress"
+            android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_centerInParent="true"
+            android:text="@string/zero"
+            android:textColor="@color/scan_color"
+            android:visibility="invisible"
+            android:textSize="100sp" />
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_num"
+            android:layout_toRightOf="@id/tv_num"
+            android:layout_toEndOf="@+id/tv_num"
+            android:text="@string/item"
+            android:visibility="invisible"
+            android:textColor="@color/scan_color"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/tv_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_num"
+            android:layout_centerHorizontal="true"
+            android:text="@string/show_add_whiteList"
+            android:textColor="@color/scan_color"
+            android:textSize="30sp"
+            android:visibility="invisible" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/tv_show_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/scan_color"
+                android:maxEms="15"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+
+            <!-- api16以下用alignParentRight, 17以上用alignParentEnd -->
+            <TextView
+                android:id="@+id/tv_show_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/scan_color"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scan_instruction"
+            android:textColor="@color/text_remove"
+            android:gravity="center_horizontal"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_scan_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
 
 
+    </LinearLayout>
 
+
+    <Button
+        android:id="@+id/btn_start_whiteList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_enter_whiteList"
+        android:layout_gravity="bottom"
+        android:textSize="18sp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:visibility="invisible"/>
 
 </LinearLayout>

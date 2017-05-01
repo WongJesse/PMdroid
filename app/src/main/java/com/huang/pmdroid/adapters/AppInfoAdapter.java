@@ -1,7 +1,6 @@
 package com.huang.pmdroid.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +8,16 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.huang.pmdroid.R;
 import com.huang.pmdroid.models.AppInfo;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huang on 2017/4/25.
+ *
  */
 public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.AppInfoViewHolder>{
     private List<AppInfo> list = new ArrayList<>();
@@ -52,10 +46,11 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.AppInfoV
 
     public void setData(List<AppInfo> list){
         this.list = list;
-  //      initMap();
+  //    initMap();
         flag = new boolean[list.size()];
         notifyDataSetChanged();
     }
+
 
  /*   private void initMap(){
         for(int i = 0; i < list.size(); i++){

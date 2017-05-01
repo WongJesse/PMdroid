@@ -41,12 +41,6 @@
 
         </service>
 
-        <receiver android:name=".BroadcastTest">
-            <intent-filter>
-                <action android:name="com.huang.pmdroid.getData"></action>
-            </intent-filter>
-        </receiver>
-
     </application>
 
 </manifest>

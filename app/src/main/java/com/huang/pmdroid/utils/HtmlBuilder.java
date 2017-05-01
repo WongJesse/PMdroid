@@ -1,10 +1,12 @@
 package com.huang.pmdroid.utils;
 
+import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
 
 /**
  * Created by huang on 2017/4/22.
+ *
  */
 public class HtmlBuilder {
     private StringBuilder mStringBuilder;
@@ -51,9 +53,15 @@ public class HtmlBuilder {
         return this;
     }
 
-    public Spanned build() {
-        return Html.fromHtml(mStringBuilder.toString());
+    @SuppressWarnings("deprecation")
+    public Spanned build(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            return Html.fromHtml(mStringBuilder.toString(),Html.FROM_HTML_MODE_LEGACY);
+        }else{
+            return Html.fromHtml(mStringBuilder.toString());
+        }
     }
+
 
     public String getRaw() {
         return mStringBuilder.toString();

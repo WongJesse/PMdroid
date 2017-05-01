@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteReadOnlyDatabaseException;
-import android.support.design.widget.TabLayout;
 import android.util.Log;
-
-import com.huang.pmdroid.MainActivity;
 import com.huang.pmdroid.models.AppInfo;
 import com.huang.pmdroid.models.Record;
 import com.huang.pmdroid.utils.Constants;
@@ -20,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by huang on 2017/4/18.
+ *
  */
 public class DbHelper extends SQLiteOpenHelper{
 
@@ -161,7 +159,7 @@ public class DbHelper extends SQLiteOpenHelper{
 
     public void deleteRecord(int keyId){
         SQLiteDatabase db = getDatabase(true);
-        db.delete(TABLE_RECORDS, "record_id=?", new String[]{keyId+""});
+        db.delete(TABLE_RECORDS, "record_id=?", new String[]{keyId + ""});
     }
 
     public void insertWhiteList(AppInfo appInfo) {
@@ -217,9 +215,20 @@ public class DbHelper extends SQLiteOpenHelper{
     public boolean checkPackNameExist(String packName){
         String sql = KEY_APP_PACKNAME + " = " + "'" + packName + "'";
         Cursor cursor = getDatabase(true).query(TABLE_WHITELIST, new String[]{KEY_APP_PACKNAME}, sql, null, null, null, null);
-        if(cursor != null && cursor.getCount() == 1)
+        if(cursor != null && cursor.getCount() == 1){
+            cursor.close();
             return true;
-        else
+        }
+        else{
+            if(cursor != null){
+                cursor.close();
+            }
             return false;
+        }
+    }
+
+    public void clearAllFromWhiteList(){
+        SQLiteDatabase db = getDatabase(true);
+        db.delete(TABLE_WHITELIST, null, null);
     }
 }
