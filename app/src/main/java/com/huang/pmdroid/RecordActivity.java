@@ -22,6 +22,8 @@ import com.huang.pmdroid.models.Record;
 import com.huang.pmdroid.utils.Constants;
 import com.huang.pmdroid.utils.DataUtil;
 import com.huang.pmdroid.utils.HtmlBuilder;
+import com.huang.pmdroid.utils.PackageUtil;
+import com.huang.pmdroid.utils.SplitHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -195,7 +197,11 @@ public class RecordActivity extends AppCompatActivity {
                 .appendBold("method: ").appendText(record.getMethod()).newLine(2)
                 .appendBold("time: ").appendText(DataUtil.getDateFromTimestamp(record.getCreatedAt())).newLine(2)
                 .appendBold("from: ").appendText(record.getOrigin()).newLine(2)
+                .appendBold("labelFrom: ").appendText(PackageUtil.getNameByPackageName(context, record.getOrigin())).newLine(2)
+                .appendBold("permissionFrom: ").appendText(SplitHelper.permissionSplit(record.getOriginPermission())).newLine(2)
                 .appendBold("to: ").appendText(record.getDest()).newLine(2)
+                .appendBold("labelTo: ").appendText(PackageUtil.getNameByPackageName(context, record.getDest())).newLine(2)
+                .appendBold("permissionTo: ").appendText(SplitHelper.permissionSplit(record.getDestPermission())).newLine(2)
                 .appendBold("action: ").appendText(record.getAction()).newLine(2)
                 .appendBold("componentName: ").appendText(record.getComponentName())
                 .newLine(2);

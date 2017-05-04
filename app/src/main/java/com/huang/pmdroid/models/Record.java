@@ -11,7 +11,9 @@ import android.os.Parcelable;
 public class Record implements Parcelable{
     private long createdAt;  //截获的时间
     private String origin;
+    private String originPermission;  //被检测到的敏感权限
     private String dest;
+    private String destPermission;
     private String method;
     private String action;
     private String componentName;
@@ -31,6 +33,16 @@ public class Record implements Parcelable{
         this.action = action;
         this.componentName = componentName;
         this.intentExtras = intentExtras;
+    }
+
+    public String getOriginPermission(){return originPermission;}
+    public void setOriginPermission(String originPermission){
+        this.originPermission = originPermission;
+    }
+
+    public String getDestPermission(){return destPermission;}
+    public void setDestPermission(String destPermission){
+         this.destPermission = destPermission;
     }
 
     public int getKeyId(){return keyId;}

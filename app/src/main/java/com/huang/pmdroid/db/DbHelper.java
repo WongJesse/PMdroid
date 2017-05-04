@@ -17,12 +17,13 @@ import java.util.List;
 
 /**
  * Created by huang on 2017/4/18.
+ * 数据库升级版本 1001---1002  records表加入属性(两个合谋应用被警报的敏感权限)
  *
  */
 public class DbHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = Constants.DATABASE_NAME;
-    private static final int DATABASE_VERSION = 1001;
+    private static final int DATABASE_VERSION = 1002;
 
     //拦截记录表名与属性名
     public static final String TABLE_RECORDS = "records";
@@ -34,6 +35,8 @@ public class DbHelper extends SQLiteOpenHelper{
     public static final String KEY_RECORD_ACTION = "action";
     public static final String KEY_RECORD_COMPONENT_NAME = "component_name";
     public static final String KEY_RECORD_INTENT_EXTRAS = "intent_extras";
+    public static final String KEY_RECORD_ORIGIN_PERMISSION = "permission_origin";
+    public static final String KEY_RECORD_DEST_PERMISSION = "permission_dest";
 
     //白名单表名与属性名  --数据库升级版本1000---1001
     public static final String TABLE_WHITELIST = "whiteList";
@@ -50,7 +53,9 @@ public class DbHelper extends SQLiteOpenHelper{
             + KEY_RECORD_METHOD + " text, "
             + KEY_RECORD_ACTION + " text, "
             + KEY_RECORD_COMPONENT_NAME + " text, "
-            + KEY_RECORD_INTENT_EXTRAS + " text)";
+            + KEY_RECORD_INTENT_EXTRAS + " text, "
+            + KEY_RECORD_ORIGIN_PERMISSION + " text, "
+            + KEY_RECORD_DEST_PERMISSION + " text)";
 
     public static final String CREATE_WHITELIST = "create table " + TABLE_WHITELIST + " ("
             + KEY_APP_ID + " integer primary key autoincrement, "
@@ -90,7 +95,11 @@ public class DbHelper extends SQLiteOpenHelper{
         switch (oldVersion){
             case 1000:
                 db.execSQL(CREATE_WHITELIST);
-                Log.i(Constants.TAG, CREATE_WHITELIST + "onUpdgrade");
+                Log.i(Constants.TAG, CREATE_WHITELIST + "onUpgrade");
+            case 1001:
+                db.execSQL("alter table records add column permission_origin");
+                db.execSQL("alter table records add column permission_dest");
+                Log.i(Constants.TAG, "alter table onUpgrade");
             default:
         }
     }
@@ -122,6 +131,8 @@ public class DbHelper extends SQLiteOpenHelper{
         values.put(KEY_RECORD_ACTION, record.getAction());
         values.put(KEY_RECORD_COMPONENT_NAME, record.getComponentName());
         values.put(KEY_RECORD_INTENT_EXTRAS, record.getIntentExtras());
+        values.put(KEY_RECORD_ORIGIN_PERMISSION, record.getOriginPermission());
+        values.put(KEY_RECORD_DEST_PERMISSION, record.getDestPermission());
         db.insert(TABLE_RECORDS, null, values);
         values.clear();
         Log.i(Constants.TAG, "insert record successfully!");
@@ -143,6 +154,8 @@ public class DbHelper extends SQLiteOpenHelper{
                 record.setAction(cursor.getString(cursor.getColumnIndex(KEY_RECORD_ACTION)));
                 record.setComponentName(cursor.getString(cursor.getColumnIndex(KEY_RECORD_COMPONENT_NAME)));
                 record.setIntentExtras(cursor.getString(cursor.getColumnIndex(KEY_RECORD_INTENT_EXTRAS)));
+                record.setOriginPermission(cursor.getString(cursor.getColumnIndex(KEY_RECORD_ORIGIN_PERMISSION)));
+                record.setDestPermission(cursor.getString(cursor.getColumnIndex(KEY_RECORD_DEST_PERMISSION)));
                 mResultlist.add(record);
             }
             cursor.close();

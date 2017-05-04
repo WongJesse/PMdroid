@@ -14,6 +14,7 @@ import com.huang.pmdroid.R;
 import com.huang.pmdroid.models.Record;
 import com.huang.pmdroid.utils.DataUtil;
 import com.huang.pmdroid.utils.HtmlBuilder;
+import com.huang.pmdroid.utils.PackageUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -109,9 +110,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         public void selectedRecord(Record item){
             if(item.getIsSelected()){
                // itemView.setBackground(context.getResources().getDrawable(R.drawable.item_selected));
-                ContextCompat.getDrawable(context,R.drawable.item_selected);
+                itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.item_selected));
             }else{
-                ContextCompat.getDrawable(context,R.drawable.item_common);
+                itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.item_common));
                 //itemView.setBackground(context.getResources().getDrawable(R.drawable.item_common));
             }
 
@@ -138,7 +139,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                     .appendBold("method: ").appendText(record.getMethod()).newLine(2)
                     .appendBold("time: ").appendText(DataUtil.getDateFromTimestamp(record.getCreatedAt())).newLine(2)
                     .appendBold("from: ").appendText(record.getOrigin()).newLine(2)
+                    .appendBold("fromPermission: ").appendText(record.getOriginPermission()).newLine(2)
                     .appendBold("to: ").appendText(record.getDest()).newLine(2)
+                    .appendBold("toPermission: ").appendText(record.getDestPermission()).newLine(2)
                     .appendBold("action: ").appendText(record.getAction()).newLine(2)
                     .appendBold("componentName: ").appendText(record.getComponentName())
                     .newLine(2);

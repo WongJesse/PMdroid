@@ -31,6 +31,7 @@ import java.util.Map;
  *
  */
 public class MonitorService extends Service {
+    public static final String ACTION = "com.huang.pmdroid.receive";
     private Context context;
     private DataReceiver receiver;
     @Override
@@ -139,6 +140,8 @@ public class MonitorService extends Service {
                                 if(perTo.equals(cmp)){
                                     Log.e("MonitorServiceLast", perFrom);
                                     Log.e("MonitorServiceLast", perTo);
+                                    record.setOriginPermission(perFrom);
+                                    record.setDestPermission(perTo);
                                     record.setOrigin(from);   //更新包名
                                     record.setDest(to);
                                     return true;
@@ -190,7 +193,7 @@ public class MonitorService extends Service {
     private class DataReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent){
-            if(intent.getAction().equals("com.huang.pmdroid.receive")){
+            if(intent.getAction().equals(MonitorService.ACTION)){
                 boolean decision;
                 Record record = intent.getParcelableExtra("intentData");
                 String to = record.getDest();

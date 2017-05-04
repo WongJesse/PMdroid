@@ -37,9 +37,8 @@
             android:name="xposedminversion"
             android:value="30"/>
 
-        <service android:name=".services.MonitorService">
+        <service android:name=".services.MonitorService" />
 
-        </service>
 
     </application>
 

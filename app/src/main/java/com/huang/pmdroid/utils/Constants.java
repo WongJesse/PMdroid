@@ -7,6 +7,7 @@ package com.huang.pmdroid.utils;
 public interface Constants {
 
     String TAG = "PMdroid";
+    String XPOSED_TAG = "xposed";
     String DATABASE_NAME = "PMdroid.db";
     String SERVICE_NAME = "com.huang.pmdroid.services.MonitorService";
 

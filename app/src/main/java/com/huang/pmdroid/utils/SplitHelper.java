@@ -28,5 +28,11 @@ public class SplitHelper {
         return list;
     }
 
-
+    public static String permissionSplit(String permission){
+        String[] split = permission.split("\\.");
+        if(split.length == 3){
+            return split[2];
+        }else
+            return "error";
+    }
 }
